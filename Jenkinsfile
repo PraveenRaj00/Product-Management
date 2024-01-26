@@ -16,7 +16,7 @@ pipeline {
                         "Order-microservice": { sh 'mvn clean install -f Order-microservice/pom.xml' },
                         "API-Gateway": { sh 'mvn clean install -f API-Gateway/pom.xml' },
                         // Add more Maven commands for each microservice
-                    )
+                    
                 }
             }
         }
