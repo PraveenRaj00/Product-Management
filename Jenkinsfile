@@ -9,7 +9,7 @@ pipeline {
             }
         }
 
-        stage('Build') {
+       stage('Build') {
     steps {
         script {
             withEnv(["MVN_HOME=$mvnHome"]) {
@@ -34,6 +34,7 @@ pipeline {
         }
     }
 }
+
 
 
         stage('Test') {
