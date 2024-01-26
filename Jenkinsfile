@@ -11,14 +11,13 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    parallel (
                         "Service-Discovery": { sh 'mvn clean install -f Service-Discovery/pom.xml' },
                         "Product-microservice": { sh 'mvn clean install -f Product-microservice/pom.xml' },
                         "Order-microservice": { sh 'mvn clean install -f Order-microservice/pom.xml' },
                         "API-Gateway": { sh 'mvn clean install -f API-Gateway/pom.xml' },
                         // Add more Maven commands for each microservice
                     )
-                }
+                
             }
         }
 
