@@ -25,8 +25,8 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    bat 'mvn test -f Product-microservice/pom.xml'
-                    bat 'mvn test -f Order-microservice/pom.xml'
+                    sh 'nohup mvn test -f Product-microservice/pom.xml > Product-microservice-test.log 2>&1 &'
+                    sh 'nohup mvn test -f Order-microservice/pom.xml > Order-microservice-test.log 2>&1 &'
                     // Add more Maven commands for running tests in each microservice
                 }
             }
