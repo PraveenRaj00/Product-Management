@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes[0]:
+        id: PRODUCT-SERVICE
+        uri: lb://PRODUCT-SERVICE
+        predicates[0]: Path= /products/**
+      routes[1]:
+        id: ORDER-SERVICE
+        uri: lb://ORDER-SERVICE
+        predicates[0]: Path= /orders/**
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
+
+server:
+  port: 8081
+
