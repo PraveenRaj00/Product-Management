@@ -4,12 +4,10 @@ import com.example.Productmicroservice.entity.OrderDetails;
 import com.example.Productmicroservice.entity.Product;
 import com.example.Productmicroservice.repository.ProductRepository;
 import com.sun.source.tree.ModuleTree;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -19,6 +17,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.mockito.Mockito.mock;
+import static reactor.core.publisher.Mono.when;
 
 @SpringBootTest
 public class ProductServiceImplTest {
@@ -54,10 +56,12 @@ public class ProductServiceImplTest {
                 .build();
     }
 
+
+
     @Test
     public void getSingleProductsTest(){
         Mockito.when(productRepository.findById(11L)).thenReturn(Optional.ofNullable(product1));
-        Product expectedProductName= productService.getSingle(11);
+        Product expectedProductName= productService.getSingle(11L);
         Assertions.assertEquals(expectedProductName.getProductName(),product1.getProductName());
     }
 
@@ -88,6 +92,31 @@ public class ProductServiceImplTest {
         System.out.println("To perform something after running all test cases : ");
 
     }
-
+//    @BeforeEach
+//    public void setup(){
+//        autoCloseable= MockitoAnnotations.openMocks(this);
+//        productService= new ProductServiceImpl(productRepository);
+//        product1= Product.builder().productId(1)
+//                .productName("Realme 11 pro plus 5g")
+//                .price(25000)
+//                .category("Mobile")
+//                .quantity(30)
+//                .build();
+//    }
+//
+//    @AfterEach
+//    public void tearDown() throws Exception {
+//        autoCloseable.close();
+//    }
+//
+//    @Test
+//    public void saveProject(){
+//        mock(ProductService.class);
+//        mock(ProductRepository.class);
+//
+//        Mockito.when(productRepository.save(product1)).thenReturn(product1);
+//        assertThat(productService.createProduct(product1).getProductName()).isEqualTo(product1.getProductName());
+//    }
+//
 
 }

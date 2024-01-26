@@ -13,11 +13,17 @@ import java.util.List;
 
 
 @Service
-public class productServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService{
 
+
+    private final ProductRepository productRepository;
 
     @Autowired
     private ProductRepository repository;
+
+    public ProductServiceImpl(ProductRepository productRepository) {
+        this.productRepository= productRepository;
+    }
 
     @Override
     public Product createProduct(Product product) {
