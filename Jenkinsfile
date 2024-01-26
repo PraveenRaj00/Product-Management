@@ -38,6 +38,10 @@ pipeline {
     }
 
     post {
+         always {
+            // Publish test results
+            junit 'target/surefire-reports/*.xml'
+        }
         success {
             echo 'Microservices build and tests successful!'
         }
