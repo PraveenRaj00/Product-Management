@@ -14,22 +14,27 @@ pipeline {
         script {
             withEnv(["MVN_HOME=$mvnHome"]) {
                 if (isUnix()) {
-                    sh "\"$MVN_HOME/bin/mvn\" clean install -f Service-Discovery/pom.xml"
-                    sh "\"$MVN_HOME/bin/mvn\" clean install -f Product-microservice/pom.xml"
-                    sh "\"$MVN_HOME/bin/mvn\" clean install -f Order-microservice/pom.xml"
-                    sh "\"$MVN_HOME/bin/mvn\" clean install -f API-Gateway/pom.xml"
-                    // Add more Maven commands for each microservice
+                    sh '''
+                        $MVN_HOME/bin/mvn clean install -f Service-Discovery/pom.xml
+                        $MVN_HOME/bin/mvn clean install -f Product-microservice/pom.xml
+                        $MVN_HOME/bin/mvn clean install -f Order-microservice/pom.xml
+                        $MVN_HOME/bin/mvn clean install -f API-Gateway/pom.xml
+                        # Add more Maven commands for each microservice
+                    '''
                 } else {
-                    bat("\"%MVN_HOME%\\bin\\mvn\" clean install -f Service-Discovery/pom.xml")
-                    bat("\"%MVN_HOME%\\bin\\mvn\" clean install -f Product-microservice/pom.xml")
-                    bat("\"%MVN_HOME%\\bin\\mvn\" clean install -f Order-microservice/pom.xml")
-                    bat("\"%MVN_HOME%\\bin\\mvn\" clean install -f API-Gateway/pom.xml")
-                    // Add more Maven commands for each microservice
+                    bat '''
+                        "%MVN_HOME%\\bin\\mvn" clean install -f Service-Discovery/pom.xml
+                        "%MVN_HOME%\\bin\\mvn" clean install -f Product-microservice/pom.xml
+                        "%MVN_HOME%\\bin\\mvn" clean install -f Order-microservice/pom.xml
+                        "%MVN_HOME%\\bin\\mvn" clean install -f API-Gateway/pom.xml
+                        rem Add more Maven commands for each microservice
+                    '''
                 }
             }
         }
     }
 }
+
 
         stage('Test') {
             steps {
