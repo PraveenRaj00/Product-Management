@@ -13,7 +13,8 @@ pipeline {
             steps {
                 script {
                     parallel (
-                        "Gateway-Service": { sh 'mvn clean install -f Gateway-Service/pom.xml' },
+                        "API-Gateway": { sh 'mvn clean install -f API-Gateway/pom.xml' },
+                        "Order-microservice": { sh 'mvn clean install -f Order-microservice/pom.xml' },
                          
                         // Add more Maven commands for each microservice
                     )
