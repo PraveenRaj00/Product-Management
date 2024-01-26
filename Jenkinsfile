@@ -15,6 +15,9 @@ pipeline {
                     parallel (
                         "API-Gateway": { sh 'mvn clean install -f API-Gateway/pom.xml' },
                         "Order-microservice": { sh 'mvn clean install -f Order-microservice/pom.xml' },
+                        "Product-microservice": { sh 'mvn clean install -f Product-microservice/pom.xml' },
+                        "Service-Discovery": { sh 'mvn clean install -f Service-Discovery/pom.xml' },
+                        
                          
                         // Add more Maven commands for each microservice
                     )
@@ -25,12 +28,9 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    sh 'mvn test -f Config-Server/pom.xml'
-                    sh 'mvn test -f Gateway-Service/pom.xml'
-                    sh 'mvn test -f HotelService/pom.xml'
-                    sh 'mvn test -f RatingService/pom.xml'
-                    sh 'mvn test -f Service-Registry/pom.xml'
-                    sh 'mvn test -f User-Service/pom.xml'
+                    sh 'mvn test -f Order-microservice/pom.xml'
+                    sh 'mvn test -f Product-microservice/pom.xml'
+                    
                     // Add more Maven commands for running tests in each microservice
                 }
             }
