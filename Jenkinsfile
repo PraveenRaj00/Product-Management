@@ -17,9 +17,9 @@ pipeline {
                         "Build Microservices": {
                             for (def service in services) {
                                 // Check if pom.xml exists before attempting to build
-                                if (fileExists("pom.xml")) {
-                                    echo "Building ${service}"
-                                    sh "mvn clean install -f pom.xml"
+                                if (fileExists("Product-Management/Order-microservice/pom.xml")) {
+                                    echo "Building"
+                                    sh "mvn clean install -f Product-Management/Order-microservice/pom.xml"
                                 } else {
                                     echo "pom.xml not found"
                                 }
