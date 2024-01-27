@@ -17,11 +17,11 @@ pipeline {
                         "Build Microservices": {
                             for (def service in services) {
                                 // Check if pom.xml exists before attempting to build
-                                if (fileExists("${service}/pom.xml")) {
+                                if (fileExists("pom.xml")) {
                                     echo "Building ${service}"
-                                    sh "mvn clean install -f ${service}/pom.xml"
+                                    sh "mvn clean install -f pom.xml"
                                 } else {
-                                    echo "${service}/pom.xml not found"
+                                    echo "pom.xml not found"
                                 }
                             }
                         }
