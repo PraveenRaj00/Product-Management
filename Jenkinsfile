@@ -11,18 +11,20 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    parallel(
-                        "Service-Discovery": { sh 'mvn clean install -f Service-Discovery/pom.xml' },
-                        "Product-microservice": { 
-                            if (fileExists('Product-microservice/pom.xml')) {
-                                sh 'mvn clean install -f Product-microservice/pom.xml' 
-                            } else {
-                                echo 'Product-microservice/pom.xml not found'
+                    def services = ["Service-Discovery", "Product-microservice", "Order-microservice", "API-Gateway"]
+                    
+                    parallel (
+                        "Build Microservices": {
+                            for (def service in services) {
+                                // Check if pom.xml exists before attempting to build
+                                if (fileExists("${service}/pom.xml")) {
+                                    echo "Building ${service}"
+                                    sh "mvn clean install -f ${service}/pom.xml"
+                                } else {
+                                    echo "${service}/pom.xml not found"
+                                }
                             }
-                        },
-                        "Order-microservice": { sh 'mvn clean install -f Order-microservice/pom.xml' },
-                        "API-Gateway": { sh 'mvn clean install -f API-Gateway/pom.xml' }
-                        // Add more Maven commands for each microservice
+                        }
                     )
                 }
             }
@@ -31,9 +33,26 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    sh 'mvn test -f Product-microservice/pom.xml'
-                    sh 'mvn test -f Order-microservice/pom.xml'
-                    // Add more Maven commands for running tests in each microservice
+                    parallel (
+                        "Test Order-microservice": {
+                            // Check if Order-microservice/pom.xml exists before attempting to test
+                            if (fileExists("Order-microservice/pom.xml")) {
+                                echo "Testing Order-microservice"
+                                sh "mvn test -f Order-microservice/pom.xml"
+                            } else {
+                                echo "Order-microservice/pom.xml not found"
+                            }
+                        },
+                        "Test Product-microservice": {
+                            // Check if Product-microservice/pom.xml exists before attempting to test
+                            if (fileExists("Product-microservice/pom.xml")) {
+                                echo "Testing Product-microservice"
+                                sh "mvn test -f Product-microservice/pom.xml"
+                            } else {
+                                echo "Product-microservice/pom.xml not found"
+                            }
+                        }
+                    )
                 }
             }
         }
