@@ -36,9 +36,9 @@ pipeline {
                     parallel (
                         "Test Order-microservice": {
                             // Check if Order-microservice/pom.xml exists before attempting to test
-                            if (fileExists("Product-Management/Order-microservice/pom.xml")) {
+                            if (fileExists("pom.xml")) {
                                 echo "Testing Order-microservice"
-                                sh "mvn test -f Product-Management/Order-microservice/pom.xml"
+                                sh "mvn test -f pom.xml"
                             } else {
                                 echo "pom.xml not found"
                             }
